@@ -1,14 +1,20 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Hello from ECS Microservice 🚀"
+    return jsonify({
+        "message": "Hello from ECS Microservice 🚀",
+        "status": "running"
+    })
 
 @app.route("/health")
 def health():
-    return "OK"
+    return jsonify({
+        "status": "OK"
+    })
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    # Runs the Flask app inside Docker container
+    app.run(host="0.0.0.0", port=5000, debug=False)
